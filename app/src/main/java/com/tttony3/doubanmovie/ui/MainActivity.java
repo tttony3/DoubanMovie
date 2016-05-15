@@ -1,8 +1,12 @@
-package com.tttony3.doubanmovie;
+package com.tttony3.doubanmovie.ui;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,18 +17,32 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+import com.tttony3.doubanmovie.R;
+import com.tttony3.doubanmovie.adapter.MainFragmentAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
+
+public class MainActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener, RecentMoviesFragment.OnFragmentInteractionListener, TopMoviesFragment.OnFragmentInteractionListener {
+
+    private ViewPager mViewPager;
+    private TabLayout mTabLayout;
+    private List<Fragment> fragmentList;
+    private List<String> fragmentTitles;
+    private MainFragmentAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        //test
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -36,11 +54,24 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        mViewPager = (ViewPager) findViewById(R.id.viewpager_main);
+        mTabLayout = (TabLayout) findViewById(R.id.tabs);
+
+        fragmentList = new ArrayList<>();
+        fragmentTitles = new ArrayList<>();
+        fragmentList.add(TopMoviesFragment.newInstance("", ""));
+        fragmentList.add(RecentMoviesFragment.newInstance("", ""));
+        fragmentTitles.add("Top");
+        fragmentTitles.add("Recent");
+        adapter = new MainFragmentAdapter(getSupportFragmentManager(), fragmentList, fragmentTitles);
+        mViewPager.setAdapter(adapter);
+        mTabLayout.setupWithViewPager(mViewPager);
     }
 
     @Override
@@ -98,5 +129,10 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
