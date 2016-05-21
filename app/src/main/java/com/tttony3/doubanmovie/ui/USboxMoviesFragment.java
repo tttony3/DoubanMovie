@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,39 +19,36 @@ import android.widget.ImageView;
 
 import com.tttony3.doubanmovie.R;
 import com.tttony3.doubanmovie.adapter.OnItemClickListener;
-import com.tttony3.doubanmovie.adapter.TopRecyclerViewAdapter;
-import com.tttony3.doubanmovie.bean.MoviesBean;
-import com.tttony3.doubanmovie.interfaces.GetMoreMoviesListener;
+import com.tttony3.doubanmovie.adapter.USboxRecyclerViewAdapter;
+import com.tttony3.doubanmovie.bean.USboxBean;
 import com.tttony3.doubanmovie.interfaces.SubscriberOnNextListener;
 import com.tttony3.doubanmovie.net.HttpMethods;
-import com.tttony3.doubanmovie.net.NormalSubscriber;
 import com.tttony3.doubanmovie.net.ProgressSubscriber;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link TopMoviesFragment.OnFragmentInteractionListener} interface
+ * {@link USboxMoviesFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link TopMoviesFragment#newInstance} factory method to
+ * Use the {@link USboxMoviesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TopMoviesFragment extends LazyFragment {
-    private static final String KEY_ID = "ViewTransitionValues:id";
-    private String TAG = "TopMoviesFragment";
+public class USboxMoviesFragment extends LazyFragment {
+    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private boolean isPrepared;
+    USboxRecyclerViewAdapter mUSboxRecyclerViewAdapter;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private OnFragmentInteractionListener mListener;
     private View view;
     private RecyclerView mRecyclerView;
-    private TopRecyclerViewAdapter mTopRecyclerViewAdapter;
-    private OnFragmentInteractionListener mListener;
-    ProgressSubscriber<MoviesBean> progressSubscriber;
-    NormalSubscriber<MoviesBean> normalSubscriber;
-    public TopMoviesFragment() {
+    private boolean isPrepared;
+
+    public USboxMoviesFragment() {
         // Required empty public constructor
     }
 
@@ -62,11 +58,11 @@ public class TopMoviesFragment extends LazyFragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment TopMoviesFragment.
+     * @return A new instance of fragment USboxMoviesFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static TopMoviesFragment newInstance(String param1, String param2) {
-        TopMoviesFragment fragment = new TopMoviesFragment();
+    public static USboxMoviesFragment newInstance(String param1, String param2) {
+        USboxMoviesFragment fragment = new USboxMoviesFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -86,10 +82,8 @@ public class TopMoviesFragment extends LazyFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_top_movies, container, false);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_top);
-
+        view = inflater.inflate(R.layout.fragment_usbox_movies, container, false);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_usbox);
         isPrepared = true;
         lazyLoad();
         return view;
@@ -119,56 +113,32 @@ public class TopMoviesFragment extends LazyFragment {
         mListener = null;
     }
 
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
-
-
     @Override
     public void onFirstVisible() {
-        getMoviesWithProgress(0, 30);
+        getUSBox();
     }
+
+    private static final String KEY_ID = "ViewTransitionValues:id";
 
     @Override
     protected void lazyLoad() {
         if (!isPrepared || !isVisible) {
             return;
         }
-        Log.v(TAG, "lazyLoad");
-        if (null == mTopRecyclerViewAdapter) {
+        if (mUSboxRecyclerViewAdapter == null) {
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
             linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             mRecyclerView.setLayoutManager(linearLayoutManager);
-            mTopRecyclerViewAdapter = new TopRecyclerViewAdapter(this.getContext(), null);
-            mRecyclerView.setAdapter(mTopRecyclerViewAdapter);
-            mTopRecyclerViewAdapter.setGetMoreMoviesListener(new GetMoreMoviesListener() {
-                @Override
-                public void getMoreMovies() {
-                    getMovies(mTopRecyclerViewAdapter.getItemCount(), 30);
-                }
-            });
-            mTopRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
+            mUSboxRecyclerViewAdapter = new USboxRecyclerViewAdapter(this.getContext(), null);
+            mRecyclerView.setAdapter(mUSboxRecyclerViewAdapter);
+
+            mUSboxRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onClick(View v, int position) {
                     Intent intent = new Intent(getActivity(), DetailActivity.class);
                     intent.putExtra(KEY_ID, v.getTransitionName());
-//                    intent.putExtra("uriString",mTopRecyclerViewAdapter.getItemImgUri(position));
-//                    intent.putExtra("title",mTopRecyclerViewAdapter.getItemTitle(position));
-//                    intent.putExtra("title",mTopRecyclerViewAdapter.getItemTitle(position));
-                    intent.putExtra("bean", mTopRecyclerViewAdapter.getItem(position));
-                    intent.putExtra("type", "top");
+                    intent.putExtra("bean", mUSboxRecyclerViewAdapter.getItem(position));
+                    intent.putExtra("type", "us");
                     intent.putExtra("bitmap", drawableToBitmap(((ImageView) v.findViewById(R.id.img_movie)).getDrawable()));
                     ActivityOptions activityOptions
                             = ActivityOptions.makeSceneTransitionAnimation(getActivity(), v.findViewById(R.id.img_movie), "img");
@@ -177,7 +147,20 @@ public class TopMoviesFragment extends LazyFragment {
                 }
             });
         }
+        // getUSBox();
 
+    }
+
+    ProgressSubscriber progressSubscriber;
+
+    private void getUSBox() {
+        progressSubscriber = new ProgressSubscriber<>(new SubscriberOnNextListener<USboxBean>() {
+            @Override
+            public void onNext(USboxBean bean) {
+                mUSboxRecyclerViewAdapter.addList(bean.getSubjects());
+            }
+        }, getActivity());
+        HttpMethods.getInstance().getUSBox(progressSubscriber);
     }
 
     public static Bitmap drawableToBitmap(Drawable drawable) {
@@ -194,28 +177,20 @@ public class TopMoviesFragment extends LazyFragment {
         return bitmap;
     }
 
-    private void getMovies(int start, int count) {
-        Log.v(TAG, "getMovies");
-        normalSubscriber = new NormalSubscriber<>(new SubscriberOnNextListener<MoviesBean>() {
-            @Override
-            public void onNext(MoviesBean moviesBean) {
-                mTopRecyclerViewAdapter.addList(moviesBean.getSubjects());
-                mTopRecyclerViewAdapter.isFirst = true;
-            }
-        }, getActivity());
-        HttpMethods.getInstance().getTopMovie(normalSubscriber, start, count);
+
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p/>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
     }
-
-    private void getMoviesWithProgress(int start, int count) {
-        Log.v(TAG, "getMoviesWithProgress");
-        progressSubscriber = new ProgressSubscriber<>(new SubscriberOnNextListener<MoviesBean>() {
-            @Override
-            public void onNext(MoviesBean moviesBean) {
-                mTopRecyclerViewAdapter.addList(moviesBean.getSubjects());
-            }
-        }, getActivity());
-        HttpMethods.getInstance().getTopMovie(progressSubscriber, start, count);
-    }
-
-
 }

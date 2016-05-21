@@ -2,38 +2,44 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-
-    android:paddingTop="8dp">
+    android:layout_height="106dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="3dp">
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
+            android:scaleType="centerCrop"
+            android:layout_centerVertical="true"
+            android:transitionName="img"
             android:id="@+id/img_movie"
-            android:layout_width="120dp"
-            android:layout_height="52dp"
-            fresco:fadeDuration="300" />
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
 
 
         <TextView
+            android:maxLines="1"
             android:id="@+id/tv_movie_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_toEndOf="@id/img_movie"
+            android:ellipsize="end"
+            android:layout_toStartOf="@+id/tv_rating"
+            android:layout_toEndOf="@+id/img_movie"
             android:text="美国队长3"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_toStartOf="@id/tv_movie_rating"
+            android:layout_marginStart="5dp"
+            android:layout_toStartOf="@+id/tv_movie_rating"
             android:text="评分:"
             android:textSize="16sp" />
 
@@ -42,17 +48,63 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             android:text="9.8"
             android:textSize="16sp" />
 
         <TextView
+            android:id="@+id/tv_directors"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="7dp"
+            android:layout_below="@+id/tv_movie_title"
+            android:layout_toEndOf="@+id/img_movie"
+            android:text="导演:"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_movie_directors"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_directors"
+            android:layout_toEndOf="@+id/tv_directors"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="xxx"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_casts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="7dp"
+            android:layout_below="@+id/tv_directors"
+            android:layout_toEndOf="@+id/img_movie"
+            android:text="演员:"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_movie_casts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:layout_alignBottom="@+id/tv_casts"
+            android:layout_toEndOf="@+id/tv_casts"
+            android:text="xxx"
+            android:ellipsize="end"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_marginTop="3dp"
             android:id="@+id/tv_pubdates"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_alignBottom="@id/img_movie"
+            android:layout_alignParentBottom="true"
+
             android:layout_toEndOf="@id/img_movie"
             android:paddingBottom="3dp"
             android:text="上映日期:"
@@ -63,7 +115,7 @@
             android:id="@+id/tv_movie_pubdates"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/img_movie"
+            android:layout_alignParentBottom="true"
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@id/tv_pubdates"
             android:text="2016年12月21日"
