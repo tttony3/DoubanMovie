@@ -177,7 +177,7 @@ public class TopMoviesFragment extends LazyFragment {
 
     }
 
-    public static Bitmap drawableToBitmap(Drawable drawable) {
+    public  Bitmap drawableToBitmap(Drawable drawable) {
         Bitmap bitmap = Bitmap
                 .createBitmap(
                         drawable.getIntrinsicWidth(),

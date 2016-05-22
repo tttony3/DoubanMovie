@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:stateListAnimator ="@drawable/animate_translationz"
     android:layout_width="150dp"
     android:layout_height="wrap_content"
-    android:layout_margin="2dp"
+    android:layout_marginBottom="9dp"
+    android:layout_marginStart="4dp"
+    android:layout_marginEnd="4dp"
+    android:layout_marginTop="3dp"
+    android:foreground="?android:attr/selectableItemBackground"
     android:background="@color/window_background"
     android:elevation="2dp">
 
     <ImageView
-
+        android:transitionName="castImg"
+        android:padding="2dp"
         android:id="@+id/gallery_item_image"
         android:layout_width="match_parent"
         android:layout_height="150dp"

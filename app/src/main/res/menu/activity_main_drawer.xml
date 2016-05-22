@@ -28,7 +28,7 @@
             <item
 
                 android:title="依赖以下开源项目:"></item>
-            <item android:title="Glide,Retrofit,Rxandroid,Rxjava,Gson"></item>
+            <item android:title="Glide,Retrofit,Rxjava,Gson,OkHttp"></item>
 
         </menu>
     </item>

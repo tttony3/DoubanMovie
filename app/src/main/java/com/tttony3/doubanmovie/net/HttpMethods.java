@@ -3,6 +3,7 @@ package com.tttony3.doubanmovie.net;
 import android.util.Log;
 
 import com.tttony3.doubanmovie.bean.MoviesBean;
+import com.tttony3.doubanmovie.bean.SubjectBean;
 import com.tttony3.doubanmovie.bean.USboxBean;
 
 import java.util.List;
@@ -96,4 +97,27 @@ public class HttpMethods {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
     }
+
+    /**
+     * 用于获取影片详细介绍
+     *
+     * @param subscriber 由调用者传过来的观察者对象
+     * @param id 影片id
+     */
+    public void getSubjuct(Subscriber<String> subscriber, String id){
+        Log.v(TAG,"getSubject "+id);
+        mMovieService.getSubject(id)
+                .map(new Func1<SubjectBean, String>() {
+                    @Override
+                    public String call(SubjectBean bean) {
+                        return bean.getSummary();
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+
+    }
+
 }

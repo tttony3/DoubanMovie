@@ -28,7 +28,8 @@ public class NormalSubscriber<T> extends Subscriber<T> {
 
     @Override
     public void onCompleted() {
-        Toast.makeText(context, "加载成功", Toast.LENGTH_SHORT).show();
+
+        //Toast.makeText(context, "加载成功", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -43,7 +44,8 @@ public class NormalSubscriber<T> extends Subscriber<T> {
 
     @Override
     public void onStart() {
-        Toast.makeText(context, "正在加载..", Toast.LENGTH_SHORT).show();
+
+//        Toast.makeText(context, "正在加载..", Toast.LENGTH_SHORT).show();
     }
 
 }
