@@ -28,6 +28,8 @@ import com.tttony3.doubanmovie.net.HttpMethods;
 import com.tttony3.doubanmovie.net.NormalSubscriber;
 import com.tttony3.doubanmovie.net.ProgressSubscriber;
 
+import java.util.List;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -50,10 +52,9 @@ public class TopMoviesFragment extends LazyFragment {
     private RecyclerView mRecyclerView;
     private TopRecyclerViewAdapter mTopRecyclerViewAdapter;
     private OnFragmentInteractionListener mListener;
-    ProgressSubscriber<MoviesBean> progressSubscriber;
-    NormalSubscriber<MoviesBean> normalSubscriber;
+    ProgressSubscriber<List<MoviesBean.SubjectsBean>> progressSubscriber;
+    NormalSubscriber<List<MoviesBean.SubjectsBean>> normalSubscriber;
     public TopMoviesFragment() {
-        // Required empty public constructor
     }
 
     /**
@@ -86,7 +87,6 @@ public class TopMoviesFragment extends LazyFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_top_movies, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_top);
 
@@ -138,7 +138,7 @@ public class TopMoviesFragment extends LazyFragment {
 
     @Override
     public void onFirstVisible() {
-        getMoviesWithProgress(0, 30);
+        getMoviesWithProgress(0, 15);
     }
 
     @Override
@@ -156,7 +156,7 @@ public class TopMoviesFragment extends LazyFragment {
             mTopRecyclerViewAdapter.setGetMoreMoviesListener(new GetMoreMoviesListener() {
                 @Override
                 public void getMoreMovies() {
-                    getMovies(mTopRecyclerViewAdapter.getItemCount(), 30);
+                    getMovies(mTopRecyclerViewAdapter.getItemCount(), 20);
                 }
             });
             mTopRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
@@ -164,9 +164,6 @@ public class TopMoviesFragment extends LazyFragment {
                 public void onClick(View v, int position) {
                     Intent intent = new Intent(getActivity(), DetailActivity.class);
                     intent.putExtra(KEY_ID, v.getTransitionName());
-//                    intent.putExtra("uriString",mTopRecyclerViewAdapter.getItemImgUri(position));
-//                    intent.putExtra("title",mTopRecyclerViewAdapter.getItemTitle(position));
-//                    intent.putExtra("title",mTopRecyclerViewAdapter.getItemTitle(position));
                     intent.putExtra("bean", mTopRecyclerViewAdapter.getItem(position));
                     intent.putExtra("type", "top");
                     intent.putExtra("bitmap", drawableToBitmap(((ImageView) v.findViewById(R.id.img_movie)).getDrawable()));
@@ -196,10 +193,10 @@ public class TopMoviesFragment extends LazyFragment {
 
     private void getMovies(int start, int count) {
         Log.v(TAG, "getMovies");
-        normalSubscriber = new NormalSubscriber<>(new SubscriberOnNextListener<MoviesBean>() {
+        normalSubscriber = new NormalSubscriber<>(new SubscriberOnNextListener<List<MoviesBean.SubjectsBean>>() {
             @Override
-            public void onNext(MoviesBean moviesBean) {
-                mTopRecyclerViewAdapter.addList(moviesBean.getSubjects());
+            public void onNext(List<MoviesBean.SubjectsBean> subjucts) {
+                mTopRecyclerViewAdapter.addList(subjucts);
                 mTopRecyclerViewAdapter.isFirst = true;
             }
         }, getActivity());
@@ -208,10 +205,10 @@ public class TopMoviesFragment extends LazyFragment {
 
     private void getMoviesWithProgress(int start, int count) {
         Log.v(TAG, "getMoviesWithProgress");
-        progressSubscriber = new ProgressSubscriber<>(new SubscriberOnNextListener<MoviesBean>() {
+        progressSubscriber = new ProgressSubscriber<>(new SubscriberOnNextListener<List<MoviesBean.SubjectsBean>>() {
             @Override
-            public void onNext(MoviesBean moviesBean) {
-                mTopRecyclerViewAdapter.addList(moviesBean.getSubjects());
+            public void onNext(List<MoviesBean.SubjectsBean> subjucts) {
+                mTopRecyclerViewAdapter.addList(subjucts);
             }
         }, getActivity());
         HttpMethods.getInstance().getTopMovie(progressSubscriber, start, count);

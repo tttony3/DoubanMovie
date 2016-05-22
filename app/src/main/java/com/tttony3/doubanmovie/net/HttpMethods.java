@@ -5,6 +5,7 @@ import android.util.Log;
 import com.tttony3.doubanmovie.bean.MoviesBean;
 import com.tttony3.doubanmovie.bean.USboxBean;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -13,6 +14,7 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -60,9 +62,15 @@ public class HttpMethods {
      * @param start      起始位置
      * @param count      获取长度
      */
-    public void getTopMovie(Subscriber<MoviesBean> subscriber, int start, int count) {
+    public void getTopMovie(Subscriber<List<MoviesBean.SubjectsBean>> subscriber, int start, int count) {
         Log.v(TAG, "getTopMovie");
         mMovieService.getTopMovie(start, count)
+                .map(new Func1<MoviesBean, List<MoviesBean.SubjectsBean>>() {
+                    @Override
+                    public List<MoviesBean.SubjectsBean> call(MoviesBean moviesBean) {
+                        return moviesBean.getSubjects();
+                    }
+                })
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -74,9 +82,15 @@ public class HttpMethods {
      *
      * @param subscriber 由调用者传过来的观察者对象
      */
-    public void getUSBox(Subscriber<USboxBean> subscriber) {
+    public void getUSBox(Subscriber<List<USboxBean.SubjectsBean>> subscriber) {
         Log.v(TAG, "getUSBox");
         mMovieService.getUSBox()
+                .map(new Func1<USboxBean, List<USboxBean.SubjectsBean>>() {
+                    @Override
+                    public List<USboxBean.SubjectsBean> call(USboxBean uSboxBean) {
+                        return uSboxBean.getSubjects();
+                    }
+                })
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

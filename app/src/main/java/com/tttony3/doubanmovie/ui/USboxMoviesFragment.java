@@ -25,6 +25,8 @@ import com.tttony3.doubanmovie.interfaces.SubscriberOnNextListener;
 import com.tttony3.doubanmovie.net.HttpMethods;
 import com.tttony3.doubanmovie.net.ProgressSubscriber;
 
+import java.util.List;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -35,7 +37,6 @@ import com.tttony3.doubanmovie.net.ProgressSubscriber;
  */
 public class USboxMoviesFragment extends LazyFragment {
     // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     USboxRecyclerViewAdapter mUSboxRecyclerViewAdapter;
@@ -49,7 +50,6 @@ public class USboxMoviesFragment extends LazyFragment {
     private boolean isPrepared;
 
     public USboxMoviesFragment() {
-        // Required empty public constructor
     }
 
     /**
@@ -147,17 +147,15 @@ public class USboxMoviesFragment extends LazyFragment {
                 }
             });
         }
-        // getUSBox();
-
     }
 
-    ProgressSubscriber progressSubscriber;
+    ProgressSubscriber<List<USboxBean.SubjectsBean>> progressSubscriber;
 
     private void getUSBox() {
-        progressSubscriber = new ProgressSubscriber<>(new SubscriberOnNextListener<USboxBean>() {
+        progressSubscriber = new ProgressSubscriber<>(new SubscriberOnNextListener<List<USboxBean.SubjectsBean>>() {
             @Override
-            public void onNext(USboxBean bean) {
-                mUSboxRecyclerViewAdapter.addList(bean.getSubjects());
+            public void onNext(List<USboxBean.SubjectsBean> subjucts) {
+                mUSboxRecyclerViewAdapter.addList(subjucts);
             }
         }, getActivity());
         HttpMethods.getInstance().getUSBox(progressSubscriber);
