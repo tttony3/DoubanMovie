@@ -3,8 +3,7 @@
     <item android:state_pressed="true">
         <set>
             <objectAnimator android:propertyName="translationZ"
-                android:duration="@android:integer/config_shortAnimTime"
-                android:valueTo="6dp"
+                android:duration="@android:integer/config_shortAnimTime" android:valueTo="4dp"
                 android:valueType="floatType"/>
             <!-- you could have other objectAnimator elements
                  here for "x" and "y", or other properties -->
@@ -14,8 +13,7 @@
     <item android:state_checked="true">
         <set>
             <objectAnimator android:propertyName="translationZ"
-                android:duration="@android:integer/config_shortAnimTime"
-                android:valueTo="6dp"
+                android:duration="@android:integer/config_shortAnimTime" android:valueTo="4dp"
                 android:valueType="floatType"/>
             <!-- you could have other objectAnimator elements
                  here for "x" and "y", or other properties -->

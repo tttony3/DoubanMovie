@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.tttony3.doubanmovie.R;
-import com.tttony3.doubanmovie.bean.MoviesBean;
+import com.tttony3.doubanmovie.bean.SubjectBean;
 import com.tttony3.doubanmovie.interfaces.GetMoreMoviesListener;
 
 import java.util.ArrayList;
@@ -24,14 +24,14 @@ public class TopRecyclerViewAdapter extends RecyclerView.Adapter<TopRecyclerView
     private Context mContext;
     public boolean isFirst = true;
     private GetMoreMoviesListener getMoreMoviesListener;
-    List<MoviesBean.SubjectsBean> subjects;
+    List<SubjectBean> subjects;
     OnItemClickListener onItemClickListener;
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
-    public TopRecyclerViewAdapter(Context mContext, List<MoviesBean.SubjectsBean> subjects) {
+    public TopRecyclerViewAdapter(Context mContext, List<SubjectBean> subjects) {
         this.mContext = mContext;
         if (null != subjects)
             this.subjects = subjects;
@@ -44,13 +44,13 @@ public class TopRecyclerViewAdapter extends RecyclerView.Adapter<TopRecyclerView
         this.getMoreMoviesListener = getMoreMoviesListener;
     }
 
-    public void setList(List<MoviesBean.SubjectsBean> subjects) {
+    public void setList(List<SubjectBean> subjects) {
         this.subjects.clear();
         this.subjects.addAll(subjects);
         notifyDataSetChanged();
     }
 
-    public void addList(List<MoviesBean.SubjectsBean> subjects) {
+    public void addList(List<SubjectBean> subjects) {
         this.subjects.addAll(subjects);
         notifyDataSetChanged();
     }
@@ -73,7 +73,7 @@ public class TopRecyclerViewAdapter extends RecyclerView.Adapter<TopRecyclerView
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onBindViewHolder(final TopRecyclerViewAdapter.ViewHolder holder, final int position) {
-        MoviesBean.SubjectsBean tmp = subjects.get(position);
+        SubjectBean tmp = subjects.get(position);
         holder.mDate.setText(tmp.getYear());
         holder.mTitle.setText(tmp.getTitle());
         holder.mCasts.setText(tmp.getCasts().get(0).getName());
@@ -101,7 +101,7 @@ public class TopRecyclerViewAdapter extends RecyclerView.Adapter<TopRecyclerView
         return subjects.get(position).getImages().getLarge();
     }
 
-    public MoviesBean.SubjectsBean getItem(int position) {
+    public SubjectBean getItem(int position) {
         return subjects.get(position);
     }
 

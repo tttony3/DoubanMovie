@@ -1,11 +1,10 @@
 package com.tttony3.doubanmovie.net;
 
+import com.tttony3.doubanmovie.bean.CastsBean;
 import com.tttony3.doubanmovie.bean.MoviesBean;
 import com.tttony3.doubanmovie.bean.SubjectBean;
 import com.tttony3.doubanmovie.bean.USboxBean;
-import com.tttony3.doubanmovie.ui.CastDetailActivity;
 
-import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -25,5 +24,5 @@ public interface MovieService {
     Observable<SubjectBean> getSubject(@Path("id") String id);
 
     @GET("celebrity/{id}")
-    Observable<CastDetailActivity> getCastDetail(@Path("id") String id);
+    Observable<CastsBean> getCastDetail(@Path("id") String id);
 }

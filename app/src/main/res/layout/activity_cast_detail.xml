@@ -9,10 +9,10 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
+        app:elevation="0dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
         <android.support.v7.widget.Toolbar
-            android:fitsSystemWindows="true"
+
             android:background="@color/colorPrimary"
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -20,6 +20,7 @@
             android:layout_height="?attr/actionBarSize" />
     </android.support.design.widget.AppBarLayout>
 <LinearLayout
+
     android:layout_marginTop="?attr/actionBarSize"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -29,6 +30,7 @@
 
 
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
@@ -42,5 +44,62 @@
             android:layout_height="200dp"
             android:layout_gravity="center" />
     </LinearLayout>
+
+    <LinearLayout
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dp">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="出生地:" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_born_place" />
+
+    </LinearLayout>
+
+    <TextView
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="代表作:" />
+
+    <HorizontalScrollView
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:paddingTop="3dp"
+            android:paddingStart="3dp"
+            android:paddingEnd="3dp"
+            android:paddingBottom="11dp"
+            android:id="@+id/gallery_works"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+    </HorizontalScrollView>
+
+    <TextView
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:autoLink="web"
+        android:id="@+id/url" />
+
 </LinearLayout>
     </android.support.design.widget.CoordinatorLayout>

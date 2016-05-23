@@ -13,26 +13,26 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.tttony3.doubanmovie.R;
-import com.tttony3.doubanmovie.bean.MoviesBean;
-import com.tttony3.doubanmovie.bean.USboxBean;
+import com.tttony3.doubanmovie.bean.SubjectBean;
+import com.tttony3.doubanmovie.bean.SubjectsBean;
 import com.tttony3.doubanmovie.interfaces.GetMoreMoviesListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class USboxRecyclerViewAdapter extends RecyclerView.Adapter<USboxRecyclerViewAdapter.ViewHolder> {
-    private String TAG = "TopRecyclerViewAdapter";
+    private String TAG = "USboxRecyclerViewAdapter";
     private Context mContext;
     public boolean isFirst = true;
     private GetMoreMoviesListener getMoreMoviesListener;
-    List<USboxBean.SubjectsBean> subjects;
+    List<SubjectsBean> subjects;
     OnItemClickListener onItemClickListener;
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
-    public USboxRecyclerViewAdapter(Context mContext, List<USboxBean.SubjectsBean> subjects) {
+    public USboxRecyclerViewAdapter(Context mContext, List<SubjectsBean> subjects) {
         this.mContext = mContext;
         if (null != subjects)
             this.subjects = subjects;
@@ -45,13 +45,13 @@ public class USboxRecyclerViewAdapter extends RecyclerView.Adapter<USboxRecycler
         this.getMoreMoviesListener = getMoreMoviesListener;
     }
 
-    public void setList(List<USboxBean.SubjectsBean> subjects) {
+    public void setList(List<SubjectsBean> subjects) {
         this.subjects.clear();
         this.subjects.addAll(subjects);
         notifyDataSetChanged();
     }
 
-    public void addList(List<USboxBean.SubjectsBean> subjects) {
+    public void addList(List<SubjectsBean> subjects) {
         this.subjects.addAll(subjects);
         notifyDataSetChanged();
     }
@@ -74,7 +74,8 @@ public class USboxRecyclerViewAdapter extends RecyclerView.Adapter<USboxRecycler
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onBindViewHolder(final USboxRecyclerViewAdapter.ViewHolder holder, final int position) {
-        USboxBean.SubjectsBean.SubjectBean tmp = subjects.get(position).getSubject();
+        SubjectBean tmp = subjects.get(position).getSubject();
+        Log.v(TAG, tmp.toString());
         holder.mDate.setText(tmp.getYear());
         holder.mTitle.setText(tmp.getTitle());
         holder.mCasts.setText(tmp.getCasts().get(0).getName());
@@ -102,8 +103,8 @@ public class USboxRecyclerViewAdapter extends RecyclerView.Adapter<USboxRecycler
         return subjects.get(position).getSubject().getImages().getLarge();
     }
 
-    public USboxBean.SubjectsBean getItem(int position) {
-        return subjects.get(position);
+    public SubjectBean getItem(int position) {
+        return subjects.get(position).getSubject();
     }
 
     public String getItemTitle(int position) {
