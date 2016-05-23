@@ -1,11 +1,12 @@
 package com.tttony3.doubanmovie.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by tangli on 2016/5/22.
  */
-public class SubjectBean {
+public class SubjectBean implements Serializable {
     /**
      * max : 10
      * average : 9.6
@@ -37,7 +38,7 @@ public class SubjectBean {
      * current_season : null
      * original_title : The Shawshank Redemption
      * summary : 20世纪40年代末，小有成就的青年银行家安迪（蒂姆·罗宾斯 Tim Robbins 饰）因涉嫌杀害妻子及她的情人而锒铛入狱。在这座名为肖申克的监狱内，希望似乎虚无缥缈，终身监禁的惩罚无疑注定了安迪接下来灰暗绝望的人生。未过多久，安迪尝试接近囚犯中颇有声望的瑞德（摩根·弗里曼 Morgan Freeman 饰），请求对方帮自己搞来小锤子。以此为契机，二人逐渐熟稔，安迪也仿佛在鱼龙混杂、罪恶横生、黑白混淆的牢狱中找到属于自己的求生之道。他利用自身的专业知识，帮助监狱管理层逃税、洗黑钱，同时凭借与瑞德的交往在犯人中间也渐渐受到礼遇。表面看来，他已如瑞德那样对那堵高墙从憎恨转变为处之泰然，但是对自由的渴望仍促使他朝着心中的希望和目标前进。而关于其罪行的真相，似乎更使这一切朝前推进了一步……
-     本片根据著名作家斯蒂芬·金（Stephen Edwin King）的原著改编。©豆瓣
+     * 本片根据著名作家斯蒂芬·金（Stephen Edwin King）的原著改编。©豆瓣
      * subtype : movie
      * directors : [{"alt":"https://movie.douban.com/celebrity/1047973/","avatars":{"small":"http://img3.douban.com/img/celebrity/small/230.jpg","large":"http://img3.douban.com/img/celebrity/large/230.jpg","medium":"http://img3.douban.com/img/celebrity/medium/230.jpg"},"name":"弗兰克·德拉邦特","id":"1047973"}]
      * comments_count : 159372
@@ -308,222 +309,9 @@ public class SubjectBean {
         this.aka = aka;
     }
 
-    public static class RatingBean {
-        private int max;
-        private double average;
-        private String stars;
-        private int min;
-
-        public int getMax() {
-            return max;
-        }
-
-        public void setMax(int max) {
-            this.max = max;
-        }
-
-        public double getAverage() {
-            return average;
-        }
-
-        public void setAverage(double average) {
-            this.average = average;
-        }
-
-        public String getStars() {
-            return stars;
-        }
-
-        public void setStars(String stars) {
-            this.stars = stars;
-        }
-
-        public int getMin() {
-            return min;
-        }
-
-        public void setMin(int min) {
-            this.min = min;
-        }
+    public String toString() {
+        return title + " " + id;
     }
 
-    public static class ImagesBean {
-        private String small;
-        private String large;
-        private String medium;
 
-        public String getSmall() {
-            return small;
-        }
-
-        public void setSmall(String small) {
-            this.small = small;
-        }
-
-        public String getLarge() {
-            return large;
-        }
-
-        public void setLarge(String large) {
-            this.large = large;
-        }
-
-        public String getMedium() {
-            return medium;
-        }
-
-        public void setMedium(String medium) {
-            this.medium = medium;
-        }
-    }
-
-    public static class CastsBean {
-        private String alt;
-        /**
-         * small : http://img3.douban.com/img/celebrity/small/17525.jpg
-         * large : http://img3.douban.com/img/celebrity/large/17525.jpg
-         * medium : http://img3.douban.com/img/celebrity/medium/17525.jpg
-         */
-
-        private AvatarsBean avatars;
-        private String name;
-        private String id;
-
-        public String getAlt() {
-            return alt;
-        }
-
-        public void setAlt(String alt) {
-            this.alt = alt;
-        }
-
-        public AvatarsBean getAvatars() {
-            return avatars;
-        }
-
-        public void setAvatars(AvatarsBean avatars) {
-            this.avatars = avatars;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public static class AvatarsBean {
-            private String small;
-            private String large;
-            private String medium;
-
-            public String getSmall() {
-                return small;
-            }
-
-            public void setSmall(String small) {
-                this.small = small;
-            }
-
-            public String getLarge() {
-                return large;
-            }
-
-            public void setLarge(String large) {
-                this.large = large;
-            }
-
-            public String getMedium() {
-                return medium;
-            }
-
-            public void setMedium(String medium) {
-                this.medium = medium;
-            }
-        }
-    }
-
-    public static class DirectorsBean {
-        private String alt;
-        /**
-         * small : http://img3.douban.com/img/celebrity/small/230.jpg
-         * large : http://img3.douban.com/img/celebrity/large/230.jpg
-         * medium : http://img3.douban.com/img/celebrity/medium/230.jpg
-         */
-
-        private AvatarsBean avatars;
-        private String name;
-        private String id;
-
-        public String getAlt() {
-            return alt;
-        }
-
-        public void setAlt(String alt) {
-            this.alt = alt;
-        }
-
-        public AvatarsBean getAvatars() {
-            return avatars;
-        }
-
-        public void setAvatars(AvatarsBean avatars) {
-            this.avatars = avatars;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public static class AvatarsBean {
-            private String small;
-            private String large;
-            private String medium;
-
-            public String getSmall() {
-                return small;
-            }
-
-            public void setSmall(String small) {
-                this.small = small;
-            }
-
-            public String getLarge() {
-                return large;
-            }
-
-            public void setLarge(String large) {
-                this.large = large;
-            }
-
-            public String getMedium() {
-                return medium;
-            }
-
-            public void setMedium(String medium) {
-                this.medium = medium;
-            }
-        }
-    }
 }

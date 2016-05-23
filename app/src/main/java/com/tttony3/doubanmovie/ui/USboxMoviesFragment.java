@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,8 @@ import android.widget.ImageView;
 import com.tttony3.doubanmovie.R;
 import com.tttony3.doubanmovie.adapter.OnItemClickListener;
 import com.tttony3.doubanmovie.adapter.USboxRecyclerViewAdapter;
-import com.tttony3.doubanmovie.bean.USboxBean;
+import com.tttony3.doubanmovie.bean.SubjectBean;
+import com.tttony3.doubanmovie.bean.SubjectsBean;
 import com.tttony3.doubanmovie.interfaces.SubscriberOnNextListener;
 import com.tttony3.doubanmovie.net.HttpMethods;
 import com.tttony3.doubanmovie.net.ProgressSubscriber;
@@ -149,12 +151,13 @@ public class USboxMoviesFragment extends LazyFragment {
         }
     }
 
-    ProgressSubscriber<List<USboxBean.SubjectsBean>> progressSubscriber;
-
+    ProgressSubscriber<List<SubjectsBean>> progressSubscriber;
+    String TAG = "USbox";
     private void getUSBox() {
-        progressSubscriber = new ProgressSubscriber<>(new SubscriberOnNextListener<List<USboxBean.SubjectsBean>>() {
+        progressSubscriber = new ProgressSubscriber<>(new SubscriberOnNextListener<List<SubjectsBean>>() {
             @Override
-            public void onNext(List<USboxBean.SubjectsBean> subjucts) {
+            public void onNext(List<SubjectsBean> subjucts) {
+                Log.v(TAG, subjucts.toString());
                 mUSboxRecyclerViewAdapter.addList(subjucts);
             }
         }, getActivity());

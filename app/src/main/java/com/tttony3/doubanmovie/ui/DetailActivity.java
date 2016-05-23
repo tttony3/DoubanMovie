@@ -3,9 +3,6 @@ package com.tttony3.doubanmovie.ui;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.PixelFormat;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -18,15 +15,15 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.tttony3.doubanmovie.R;
-import com.tttony3.doubanmovie.bean.MoviesBean;
-import com.tttony3.doubanmovie.bean.USboxBean;
+import com.tttony3.doubanmovie.bean.CastsBean;
+import com.tttony3.doubanmovie.bean.DirectorsBean;
+import com.tttony3.doubanmovie.bean.SubjectBean;
 import com.tttony3.doubanmovie.interfaces.SubscriberOnNextListener;
 import com.tttony3.doubanmovie.net.HttpMethods;
 import com.tttony3.doubanmovie.net.NormalSubscriber;
 import com.tttony3.doubanmovie.utils.GlideCircleTransform;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by tttony3 on 2016/5/21.
@@ -34,8 +31,8 @@ import java.util.Objects;
 public class DetailActivity extends AppCompatActivity {
     String TAG = "DetailActivity";
     ImageView backdrop;
-    MoviesBean.SubjectsBean bean;
-    USboxBean.SubjectsBean usBean;
+    SubjectBean bean;
+    // USboxBean.SubjectBean usBean;
     TextView tvOriginalTitle;
     TextView tvRating;
     TextView tvCasts;
@@ -45,17 +42,14 @@ public class DetailActivity extends AppCompatActivity {
     Bitmap bm;
     LinearLayout mGalleryCasts;
     LinearLayout mGalleryDirectors;
-    String type;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        type = getIntent().getStringExtra("type");
-        if (type.equals("us"))
-            usBean = (USboxBean.SubjectsBean) getIntent().getSerializableExtra("bean");
-        else
-            bean = (MoviesBean.SubjectsBean) getIntent().getSerializableExtra("bean");
+
+        bean = (SubjectBean) getIntent().getSerializableExtra("bean");
         bm = getIntent().getParcelableExtra("bitmap");
         backdrop = (ImageView) findViewById(R.id.backdrop);
         backdrop.setImageBitmap(bm);
@@ -63,10 +57,8 @@ public class DetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        if (type.equals("us"))
-            collapsingToolbar.setTitle(usBean.getSubject().getTitle());
-        else
-            collapsingToolbar.setTitle(bean.getTitle());
+
+        collapsingToolbar.setTitle(bean.getTitle());
         collapsingToolbar.setExpandedTitleColor(getResources().getColor(R.color.translate));
         collapsingToolbar.setCollapsedTitleTextColor(getResources().getColor(R.color.graywhite));
 
@@ -83,22 +75,12 @@ public class DetailActivity extends AppCompatActivity {
         mGalleryCasts = (LinearLayout) findViewById(R.id.gallery_casts);
         mGalleryDirectors = (LinearLayout) findViewById(R.id.gallery_directors);
 
-        if (type.equals("us")) {
-            fullCastsGallery(usBean.getSubject().getCasts(), mGalleryDirectors);
-            fullDirectorsGallery(usBean.getSubject().getDirectors(), mGalleryDirectors);
-            tvOriginalTitle.setText(usBean.getSubject().getOriginal_title());
-            tvRating.setText(usBean.getSubject().getRating().getAverage() + "分");
-            for (String tmp : usBean.getSubject().getGenres()) {
-                tvGenres.append(tmp + " ");
-            }
-        } else {
-            fullCastsGallery(bean.getCasts(), mGalleryDirectors);
-            fullDirectorsGallery(bean.getDirectors(), mGalleryDirectors);
-            tvOriginalTitle.setText(bean.getOriginal_title());
-            tvRating.setText(bean.getRating().getAverage() + "分");
-            for (String tmp : bean.getGenres()) {
-                tvGenres.append(tmp + " ");
-            }
+        fullCastsGallery(bean.getCasts(), mGalleryDirectors);
+        fullDirectorsGallery(bean.getDirectors(), mGalleryDirectors);
+        tvOriginalTitle.setText(bean.getOriginal_title());
+        tvRating.setText(bean.getRating().getAverage() + "分");
+        for (String tmp : bean.getGenres()) {
+            tvGenres.append(tmp + " ");
         }
 
         HttpMethods.getInstance().getSubjuct(new NormalSubscriber<String>(new SubscriberOnNextListener<String>() {
@@ -106,31 +88,21 @@ public class DetailActivity extends AppCompatActivity {
             public void onNext(String str) {
                 tvsummary.setText("\t\t" + str);
             }
-        }, DetailActivity.this), (type.equals("us") ? usBean.getSubject().getId() : bean.getId()));
+        }, DetailActivity.this), bean.getId());
     }
 
-    private void fullDirectorsGallery(List directors, LinearLayout mGalleryDirectors) {
-        for (Object tmp : directors) {
+    private void fullDirectorsGallery(List<DirectorsBean> directors, LinearLayout mGalleryDirectors) {
+        for (DirectorsBean tmp : directors) {
             View view = LayoutInflater.from(this).inflate(R.layout.gallery_item, mGalleryDirectors, false);
             ImageView img = (ImageView) view.findViewById(R.id.gallery_item_image);
             TextView txt = (TextView) view.findViewById(R.id.gallery_item_text);
-            if (type.equals("us")) {
-                if (((USboxBean.SubjectsBean.SubjectBean.DirectorsBean) tmp).getAvatars() != null) {
-                    Glide.with(this).load(((USboxBean.SubjectsBean.SubjectBean.DirectorsBean) tmp).getAvatars().getLarge()).transform(new GlideCircleTransform(this)).crossFade().into(img);
-                    view.setOnClickListener(new ImgOnclickListener(((USboxBean.SubjectsBean.SubjectBean.DirectorsBean) tmp).getId(),
-                            ((USboxBean.SubjectsBean.SubjectBean.DirectorsBean) tmp).getAvatars().getLarge(),
-                            ((USboxBean.SubjectsBean.SubjectBean.DirectorsBean) tmp).getName()));
-                }txt.setText(((USboxBean.SubjectsBean.SubjectBean.DirectorsBean) tmp).getName());
-
-            } else {
-                if (((MoviesBean.SubjectsBean.DirectorsBean) tmp).getAvatars() != null) {
-                    Glide.with(this).load(((MoviesBean.SubjectsBean.DirectorsBean) tmp).getAvatars().getLarge()).crossFade().transform(new GlideCircleTransform(this)).into(img);
-                    view.setOnClickListener(new ImgOnclickListener(((MoviesBean.SubjectsBean.DirectorsBean) tmp).getId(),
-                            ((MoviesBean.SubjectsBean.DirectorsBean) tmp).getAvatars().getLarge(),
-                            ((MoviesBean.SubjectsBean.DirectorsBean) tmp).getName()));
-                }txt.setText(((MoviesBean.SubjectsBean.DirectorsBean) tmp).getName());
-
+            if (tmp.getAvatars() != null) {
+                Glide.with(this).load(tmp.getAvatars().getLarge()).crossFade().transform(new GlideCircleTransform(this)).into(img);
+                view.setOnClickListener(new ImgOnclickListener(tmp.getId(),
+                        tmp.getAvatars().getLarge(),
+                        tmp.getName()));
             }
+            txt.setText(tmp.getName());
             mGalleryDirectors.addView(view);
 
         }
@@ -165,28 +137,18 @@ public class DetailActivity extends AppCompatActivity {
     }
 
 
-    private void fullCastsGallery(List casts, LinearLayout mGalleryDirectors) {
-        for (Object tmp : casts) {
+    private void fullCastsGallery(List<CastsBean> casts, LinearLayout mGalleryDirectors) {
+        for (CastsBean tmp : casts) {
             View view = LayoutInflater.from(this).inflate(R.layout.gallery_item, mGalleryDirectors, false);
             ImageView img = (ImageView) view.findViewById(R.id.gallery_item_image);
             TextView txt = (TextView) view.findViewById(R.id.gallery_item_text);
-            if (type.equals("us")) {
-                if (((USboxBean.SubjectsBean.SubjectBean.CastsBean) tmp).getAvatars() != null) {
-                    Glide.with(this).load(((USboxBean.SubjectsBean.SubjectBean.CastsBean) tmp).getAvatars().getLarge()).crossFade().transform(new GlideCircleTransform(this)).into(img);
-                    view.setOnClickListener(new ImgOnclickListener(((USboxBean.SubjectsBean.SubjectBean.CastsBean) tmp).getId(),
-                            ((USboxBean.SubjectsBean.SubjectBean.CastsBean) tmp).getAvatars().getLarge(),
-                            ((USboxBean.SubjectsBean.SubjectBean.CastsBean) tmp).getName()));
-                }txt.setText(((USboxBean.SubjectsBean.SubjectBean.CastsBean) tmp).getName());
-
-            } else {
-                if (((MoviesBean.SubjectsBean.CastsBean) tmp).getAvatars() != null) {
-                    Glide.with(this).load(((MoviesBean.SubjectsBean.CastsBean) tmp).getAvatars().getLarge()).crossFade().transform(new GlideCircleTransform(this)).into(img);
-                    view.setOnClickListener(new ImgOnclickListener(((MoviesBean.SubjectsBean.CastsBean) tmp).getId(),
-                            ((MoviesBean.SubjectsBean.CastsBean) tmp).getAvatars().getLarge(),
-                            ((MoviesBean.SubjectsBean.CastsBean) tmp).getName()));
-                }txt.setText(((MoviesBean.SubjectsBean.CastsBean) tmp).getName());
-
+            if (tmp.getAvatars() != null) {
+                Glide.with(this).load(tmp.getAvatars().getLarge()).crossFade().transform(new GlideCircleTransform(this)).into(img);
+                view.setOnClickListener(new ImgOnclickListener(tmp.getId(),
+                        tmp.getAvatars().getLarge(),
+                        tmp.getName()));
             }
+            txt.setText(tmp.getName());
             mGalleryCasts.addView(view);
         }
 

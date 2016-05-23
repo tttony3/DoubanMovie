@@ -2,8 +2,10 @@ package com.tttony3.doubanmovie.net;
 
 import android.util.Log;
 
+import com.tttony3.doubanmovie.bean.CastsBean;
 import com.tttony3.doubanmovie.bean.MoviesBean;
 import com.tttony3.doubanmovie.bean.SubjectBean;
+import com.tttony3.doubanmovie.bean.SubjectsBean;
 import com.tttony3.doubanmovie.bean.USboxBean;
 
 import java.util.List;
@@ -63,12 +65,12 @@ public class HttpMethods {
      * @param start      起始位置
      * @param count      获取长度
      */
-    public void getTopMovie(Subscriber<List<MoviesBean.SubjectsBean>> subscriber, int start, int count) {
+    public void getTopMovie(Subscriber<List<SubjectBean>> subscriber, int start, int count) {
         Log.v(TAG, "getTopMovie");
         mMovieService.getTopMovie(start, count)
-                .map(new Func1<MoviesBean, List<MoviesBean.SubjectsBean>>() {
+                .map(new Func1<MoviesBean, List<SubjectBean>>() {
                     @Override
-                    public List<MoviesBean.SubjectsBean> call(MoviesBean moviesBean) {
+                    public List<SubjectBean> call(MoviesBean moviesBean) {
                         return moviesBean.getSubjects();
                     }
                 })
@@ -83,12 +85,13 @@ public class HttpMethods {
      *
      * @param subscriber 由调用者传过来的观察者对象
      */
-    public void getUSBox(Subscriber<List<USboxBean.SubjectsBean>> subscriber) {
+    public void getUSBox(Subscriber<List<SubjectsBean>> subscriber) {
         Log.v(TAG, "getUSBox");
         mMovieService.getUSBox()
-                .map(new Func1<USboxBean, List<USboxBean.SubjectsBean>>() {
+                .map(new Func1<USboxBean, List<SubjectsBean>>() {
                     @Override
-                    public List<USboxBean.SubjectsBean> call(USboxBean uSboxBean) {
+                    public List<SubjectsBean> call(USboxBean uSboxBean) {
+                        Log.v(TAG, uSboxBean.toString());
                         return uSboxBean.getSubjects();
                     }
                 })
@@ -113,6 +116,22 @@ public class HttpMethods {
                         return bean.getSummary();
                     }
                 })
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+
+    }
+
+    /**
+     * 用于获取影片详细介绍
+     *
+     * @param subscriber 由调用者传过来的观察者对象
+     * @param id         影片id
+     */
+    public void getCastDetail(Subscriber<CastsBean> subscriber, String id) {
+        Log.v(TAG, "getSubject " + id);
+        mMovieService.getCastDetail(id)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

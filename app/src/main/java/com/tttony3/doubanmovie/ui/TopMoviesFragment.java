@@ -21,7 +21,7 @@ import android.widget.ImageView;
 import com.tttony3.doubanmovie.R;
 import com.tttony3.doubanmovie.adapter.OnItemClickListener;
 import com.tttony3.doubanmovie.adapter.TopRecyclerViewAdapter;
-import com.tttony3.doubanmovie.bean.MoviesBean;
+import com.tttony3.doubanmovie.bean.SubjectBean;
 import com.tttony3.doubanmovie.interfaces.GetMoreMoviesListener;
 import com.tttony3.doubanmovie.interfaces.SubscriberOnNextListener;
 import com.tttony3.doubanmovie.net.HttpMethods;
@@ -52,8 +52,8 @@ public class TopMoviesFragment extends LazyFragment {
     private RecyclerView mRecyclerView;
     private TopRecyclerViewAdapter mTopRecyclerViewAdapter;
     private OnFragmentInteractionListener mListener;
-    ProgressSubscriber<List<MoviesBean.SubjectsBean>> progressSubscriber;
-    NormalSubscriber<List<MoviesBean.SubjectsBean>> normalSubscriber;
+    ProgressSubscriber<List<SubjectBean>> progressSubscriber;
+    NormalSubscriber<List<SubjectBean>> normalSubscriber;
     public TopMoviesFragment() {
     }
 
@@ -165,7 +165,6 @@ public class TopMoviesFragment extends LazyFragment {
                     Intent intent = new Intent(getActivity(), DetailActivity.class);
                     intent.putExtra(KEY_ID, v.getTransitionName());
                     intent.putExtra("bean", mTopRecyclerViewAdapter.getItem(position));
-                    intent.putExtra("type", "top");
                     intent.putExtra("bitmap", drawableToBitmap(((ImageView) v.findViewById(R.id.img_movie)).getDrawable()));
                     ActivityOptions activityOptions
                             = ActivityOptions.makeSceneTransitionAnimation(getActivity(), v.findViewById(R.id.img_movie), "img");
@@ -193,9 +192,9 @@ public class TopMoviesFragment extends LazyFragment {
 
     private void getMovies(int start, int count) {
         Log.v(TAG, "getMovies");
-        normalSubscriber = new NormalSubscriber<>(new SubscriberOnNextListener<List<MoviesBean.SubjectsBean>>() {
+        normalSubscriber = new NormalSubscriber<>(new SubscriberOnNextListener<List<SubjectBean>>() {
             @Override
-            public void onNext(List<MoviesBean.SubjectsBean> subjucts) {
+            public void onNext(List<SubjectBean> subjucts) {
                 mTopRecyclerViewAdapter.addList(subjucts);
                 mTopRecyclerViewAdapter.isFirst = true;
             }
@@ -205,9 +204,9 @@ public class TopMoviesFragment extends LazyFragment {
 
     private void getMoviesWithProgress(int start, int count) {
         Log.v(TAG, "getMoviesWithProgress");
-        progressSubscriber = new ProgressSubscriber<>(new SubscriberOnNextListener<List<MoviesBean.SubjectsBean>>() {
+        progressSubscriber = new ProgressSubscriber<>(new SubscriberOnNextListener<List<SubjectBean>>() {
             @Override
-            public void onNext(List<MoviesBean.SubjectsBean> subjucts) {
+            public void onNext(List<SubjectBean> subjucts) {
                 mTopRecyclerViewAdapter.addList(subjucts);
             }
         }, getActivity());
