@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by tangli on 2016/5/22.
  */
-public class CastsBean implements Serializable {
+public class CastsBean extends PersonBean implements Serializable {
     /**
      * mobile_url : https://movie.douban.com/celebrity/1054395/mobile
      * aka_en : ["Elijah Jordan Wood (本名)","Elwood, Lij and Monkey (昵称)"]
@@ -22,7 +22,7 @@ public class CastsBean implements Serializable {
      */
 
     private String mobile_url;
-    private String name;
+
     private String gender;
     /**
      * small : http://img3.doubanio.com/img/celebrity/small/51597.jpg
@@ -30,8 +30,7 @@ public class CastsBean implements Serializable {
      * medium : http://img3.doubanio.com/img/celebrity/medium/51597.jpg
      */
 
-    private AvatarsBean avatars;
-    private String id;
+
     private String name_en;
     private String born_place;
     private String alt;
