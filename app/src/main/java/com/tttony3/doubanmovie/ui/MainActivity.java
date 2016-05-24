@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -21,15 +22,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, USboxMoviesFragment.OnFragmentInteractionListener, TopMoviesFragment.OnFragmentInteractionListener {
-
+    private String TAG = "MainActivity";
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
     private List<Fragment> fragmentList;
     private List<String> fragmentTitles;
     private MainFragmentAdapter adapter;
+    int currentType = 1;
+    private static int MOVIE = 1;
+    private static int BOOK = 2;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,16 +107,36 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        if (id == R.id.about) {
-            fragmentList.clear();
-            fragmentTitles.clear();
-            fragmentList.add(TopMoviesFragment.newInstance("", ""));
-            fragmentList.add(USboxMoviesFragment.newInstance("", ""));
-            fragmentTitles.add("Top");
-            fragmentTitles.add("Recent");
-            adapter.setFragmentsAndTitle(fragmentList, fragmentTitles);
-            adapter.notifyDataSetChanged();
-            mTabLayout.setupWithViewPager(mViewPager);
+
+        if (id == R.id.nav_movie) {
+            if (currentType != MOVIE) {
+                Log.v(TAG, "R.id.nav_movie");
+                currentType = MOVIE;
+                fragmentList.clear();
+                fragmentTitles.clear();
+                fragmentList.add(USboxMoviesFragment.newInstance("", ""));
+                fragmentList.add(TopMoviesFragment.newInstance("", ""));
+                fragmentTitles.add("Recent");
+                fragmentTitles.add("Top");
+                adapter.setFragmentsAndTitle(fragmentList, fragmentTitles);
+                adapter.notifyDataSetChanged();
+                mTabLayout.setupWithViewPager(mViewPager);
+            }
+        } else if (id == R.id.nav_book) {
+            Log.v(TAG, "R.id.nav_book");
+            if (currentType != BOOK) {
+                currentType = BOOK;
+                fragmentList.clear();
+                fragmentTitles.clear();
+                fragmentList.add(TopMoviesFragment.newInstance("", ""));
+                fragmentList.add(USboxMoviesFragment.newInstance("", ""));
+                fragmentTitles.add("Top");
+                fragmentTitles.add("Recent");
+                adapter.setFragmentsAndTitle(fragmentList, fragmentTitles);
+                adapter.notifyDataSetChanged();
+                mTabLayout.setupWithViewPager(mViewPager);
+            }
+        } else if (id == R.id.about) {
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
