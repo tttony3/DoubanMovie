@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.tttony3.doubanmovie.R;
 import com.tttony3.doubanmovie.bean.CastsBean;
 import com.tttony3.doubanmovie.bean.DirectorsBean;
+import com.tttony3.doubanmovie.bean.PersonBean;
 import com.tttony3.doubanmovie.bean.SubjectBean;
 import com.tttony3.doubanmovie.interfaces.SubscriberOnNextListener;
 import com.tttony3.doubanmovie.net.HttpMethods;
@@ -32,7 +33,7 @@ public class DetailActivity extends AppCompatActivity {
     String TAG = "DetailActivity";
     ImageView backdrop;
     SubjectBean bean;
-    // USboxBean.SubjectBean usBean;
+
     TextView tvOriginalTitle;
     TextView tvRating;
     TextView tvCasts;
@@ -42,7 +43,7 @@ public class DetailActivity extends AppCompatActivity {
     Bitmap bm;
     LinearLayout mGalleryCasts;
     LinearLayout mGalleryDirectors;
-
+    private static final String KEY_ID = "ViewTransitionValues:id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +76,8 @@ public class DetailActivity extends AppCompatActivity {
         mGalleryCasts = (LinearLayout) findViewById(R.id.gallery_casts);
         mGalleryDirectors = (LinearLayout) findViewById(R.id.gallery_directors);
 
-        fullCastsGallery(bean.getCasts(), mGalleryDirectors);
-        fullDirectorsGallery(bean.getDirectors(), mGalleryDirectors);
+        fullGallery(bean.getCasts(), mGalleryCasts);
+        fullGallery(bean.getDirectors(), mGalleryDirectors);
         tvOriginalTitle.setText(bean.getOriginal_title());
         tvRating.setText(bean.getRating().getAverage() + "分");
         for (String tmp : bean.getGenres()) {
@@ -91,8 +92,8 @@ public class DetailActivity extends AppCompatActivity {
         }, DetailActivity.this), bean.getId());
     }
 
-    private void fullDirectorsGallery(List<DirectorsBean> directors, LinearLayout mGalleryDirectors) {
-        for (DirectorsBean tmp : directors) {
+    private <T extends PersonBean> void fullGallery(List<T> directors, LinearLayout mGalleryDirectors) {
+        for (T tmp : directors) {
             View view = LayoutInflater.from(this).inflate(R.layout.gallery_item, mGalleryDirectors, false);
             ImageView img = (ImageView) view.findViewById(R.id.gallery_item_image);
             TextView txt = (TextView) view.findViewById(R.id.gallery_item_text);
@@ -109,7 +110,6 @@ public class DetailActivity extends AppCompatActivity {
 
     }
 
-    private static final String KEY_ID = "ViewTransitionValues:id";
 
     class ImgOnclickListener implements View.OnClickListener {
         String id;
@@ -135,23 +135,4 @@ public class DetailActivity extends AppCompatActivity {
             startActivity(intent, activityOptions.toBundle());
         }
     }
-
-
-    private void fullCastsGallery(List<CastsBean> casts, LinearLayout mGalleryDirectors) {
-        for (CastsBean tmp : casts) {
-            View view = LayoutInflater.from(this).inflate(R.layout.gallery_item, mGalleryDirectors, false);
-            ImageView img = (ImageView) view.findViewById(R.id.gallery_item_image);
-            TextView txt = (TextView) view.findViewById(R.id.gallery_item_text);
-            if (tmp.getAvatars() != null) {
-                Glide.with(this).load(tmp.getAvatars().getLarge()).crossFade().transform(new GlideCircleTransform(this)).into(img);
-                view.setOnClickListener(new ImgOnclickListener(tmp.getId(),
-                        tmp.getAvatars().getLarge(),
-                        tmp.getName()));
-            }
-            txt.setText(tmp.getName());
-            mGalleryCasts.addView(view);
-        }
-
-    }
-
 }

@@ -1,24 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!--<group android:checkableBehavior="single">-->
-    <!--<item-->
-    <!--android:id="@+id/nav_camera"-->
-    <!--android:icon="@drawable/ic_menu_camera"-->
-    <!--android:title="Import" />-->
-    <!--<item-->
-    <!--android:id="@+id/nav_gallery"-->
-    <!--android:icon="@drawable/ic_menu_gallery"-->
-    <!--android:title="Gallery" />-->
-    <!--<item-->
-    <!--android:id="@+id/nav_slideshow"-->
-    <!--android:icon="@drawable/ic_menu_slideshow"-->
-    <!--android:title="Slideshow" />-->
-    <!--<item-->
-    <!--android:id="@+id/nav_manage"-->
-    <!--android:icon="@drawable/ic_menu_manage"-->
-    <!--android:title="Tools" />-->
-    <!--</group>-->
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_movie"
+            android:title="电影" />
+        <!--android:icon="@drawable/ic_menu_camera"-->
+        <item
+            android:id="@+id/nav_book"
+            android:title="图书" />
+
+    </group>
 
     <item android:title="关于">
         <menu>

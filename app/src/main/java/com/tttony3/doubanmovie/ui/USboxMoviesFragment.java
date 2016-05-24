@@ -19,10 +19,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.tttony3.doubanmovie.R;
+import com.tttony3.doubanmovie.adapter.MainRecyclerViewAdapter;
 import com.tttony3.doubanmovie.adapter.OnItemClickListener;
-import com.tttony3.doubanmovie.adapter.USboxRecyclerViewAdapter;
 import com.tttony3.doubanmovie.bean.SubjectBean;
-import com.tttony3.doubanmovie.bean.SubjectsBean;
 import com.tttony3.doubanmovie.interfaces.SubscriberOnNextListener;
 import com.tttony3.doubanmovie.net.HttpMethods;
 import com.tttony3.doubanmovie.net.ProgressSubscriber;
@@ -41,7 +40,7 @@ public class USboxMoviesFragment extends LazyFragment {
     // TODO: Rename parameter arguments, choose names that match
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    USboxRecyclerViewAdapter mUSboxRecyclerViewAdapter;
+    MainRecyclerViewAdapter mUSboxRecyclerViewAdapter;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -131,7 +130,7 @@ public class USboxMoviesFragment extends LazyFragment {
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
             linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             mRecyclerView.setLayoutManager(linearLayoutManager);
-            mUSboxRecyclerViewAdapter = new USboxRecyclerViewAdapter(this.getContext(), null);
+            mUSboxRecyclerViewAdapter = new MainRecyclerViewAdapter(this.getContext(), null);
             mRecyclerView.setAdapter(mUSboxRecyclerViewAdapter);
 
             mUSboxRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
@@ -151,12 +150,12 @@ public class USboxMoviesFragment extends LazyFragment {
         }
     }
 
-    ProgressSubscriber<List<SubjectsBean>> progressSubscriber;
+    ProgressSubscriber<List<SubjectBean>> progressSubscriber;
     String TAG = "USbox";
     private void getUSBox() {
-        progressSubscriber = new ProgressSubscriber<>(new SubscriberOnNextListener<List<SubjectsBean>>() {
+        progressSubscriber = new ProgressSubscriber<>(new SubscriberOnNextListener<List<SubjectBean>>() {
             @Override
-            public void onNext(List<SubjectsBean> subjucts) {
+            public void onNext(List<SubjectBean> subjucts) {
                 Log.v(TAG, subjucts.toString());
                 mUSboxRecyclerViewAdapter.addList(subjucts);
             }

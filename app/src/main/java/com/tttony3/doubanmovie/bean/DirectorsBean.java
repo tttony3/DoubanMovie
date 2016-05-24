@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by tangli on 2016/5/23.
  * Website: https://github.com/tttony3
  */
-public class DirectorsBean implements Serializable {
+public class DirectorsBean extends PersonBean implements Serializable {
     private String alt;
     /**
      * small : http://img3.douban.com/img/celebrity/small/230.jpg
@@ -14,9 +14,6 @@ public class DirectorsBean implements Serializable {
      * medium : http://img3.douban.com/img/celebrity/medium/230.jpg
      */
 
-    private AvatarsBean avatars;
-    private String name;
-    private String id;
 
     public String getAlt() {
         return alt;
