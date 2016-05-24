@@ -8,6 +8,7 @@ import com.tttony3.doubanmovie.bean.SubjectBean;
 import com.tttony3.doubanmovie.bean.SubjectsBean;
 import com.tttony3.doubanmovie.bean.USboxBean;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -85,14 +86,18 @@ public class HttpMethods {
      *
      * @param subscriber 由调用者传过来的观察者对象
      */
-    public void getUSBox(Subscriber<List<SubjectsBean>> subscriber) {
+    public void getUSBox(Subscriber<List<SubjectBean>> subscriber) {
         Log.v(TAG, "getUSBox");
         mMovieService.getUSBox()
-                .map(new Func1<USboxBean, List<SubjectsBean>>() {
+                .map(new Func1<USboxBean, List<SubjectBean>>() {
                     @Override
-                    public List<SubjectsBean> call(USboxBean uSboxBean) {
+                    public List<SubjectBean> call(USboxBean uSboxBean) {
                         Log.v(TAG, uSboxBean.toString());
-                        return uSboxBean.getSubjects();
+                        List<SubjectBean> list = new ArrayList<SubjectBean>();
+                        for (SubjectsBean tmp : uSboxBean.getSubjects()) {
+                            list.add(tmp.getSubject());
+                        }
+                        return list;
                     }
                 })
                 .subscribeOn(Schedulers.io())

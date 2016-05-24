@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity
         fragmentTitles.add("Recent");
         fragmentTitles.add("Top");
         adapter = new MainFragmentAdapter(getSupportFragmentManager(), fragmentList, fragmentTitles);
+
         mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);
 
@@ -89,6 +90,7 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
             return true;
         }
 
@@ -101,7 +103,15 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.about) {
-
+            fragmentList.clear();
+            fragmentTitles.clear();
+            fragmentList.add(TopMoviesFragment.newInstance("", ""));
+            fragmentList.add(USboxMoviesFragment.newInstance("", ""));
+            fragmentTitles.add("Top");
+            fragmentTitles.add("Recent");
+            adapter.setFragmentsAndTitle(fragmentList, fragmentTitles);
+            adapter.notifyDataSetChanged();
+            mTabLayout.setupWithViewPager(mViewPager);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

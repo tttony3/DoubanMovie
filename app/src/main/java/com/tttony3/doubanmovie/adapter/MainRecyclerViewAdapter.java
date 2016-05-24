@@ -14,25 +14,24 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.tttony3.doubanmovie.R;
 import com.tttony3.doubanmovie.bean.SubjectBean;
-import com.tttony3.doubanmovie.bean.SubjectsBean;
 import com.tttony3.doubanmovie.interfaces.GetMoreMoviesListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class USboxRecyclerViewAdapter extends RecyclerView.Adapter<USboxRecyclerViewAdapter.ViewHolder> {
-    private String TAG = "USboxRecyclerViewAdapter";
+public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerViewAdapter.ViewHolder> {
+    private String TAG = "MainRecyclerViewAdapter";
     private Context mContext;
     public boolean isFirst = true;
     private GetMoreMoviesListener getMoreMoviesListener;
-    List<SubjectsBean> subjects;
+    List<SubjectBean> subjects;
     OnItemClickListener onItemClickListener;
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
-    public USboxRecyclerViewAdapter(Context mContext, List<SubjectsBean> subjects) {
+    public MainRecyclerViewAdapter(Context mContext, List<SubjectBean> subjects) {
         this.mContext = mContext;
         if (null != subjects)
             this.subjects = subjects;
@@ -45,19 +44,19 @@ public class USboxRecyclerViewAdapter extends RecyclerView.Adapter<USboxRecycler
         this.getMoreMoviesListener = getMoreMoviesListener;
     }
 
-    public void setList(List<SubjectsBean> subjects) {
+    public void setList(List<SubjectBean> subjects) {
         this.subjects.clear();
         this.subjects.addAll(subjects);
         notifyDataSetChanged();
     }
 
-    public void addList(List<SubjectsBean> subjects) {
+    public void addList(List<SubjectBean> subjects) {
         this.subjects.addAll(subjects);
         notifyDataSetChanged();
     }
 
     @Override
-    public USboxRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MainRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view =
                 LayoutInflater.from(parent.getContext()).inflate(R.layout.carditem_movie, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
@@ -73,9 +72,8 @@ public class USboxRecyclerViewAdapter extends RecyclerView.Adapter<USboxRecycler
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
-    public void onBindViewHolder(final USboxRecyclerViewAdapter.ViewHolder holder, final int position) {
-        SubjectBean tmp = subjects.get(position).getSubject();
-        Log.v(TAG, tmp.toString());
+    public void onBindViewHolder(final MainRecyclerViewAdapter.ViewHolder holder, final int position) {
+        SubjectBean tmp = subjects.get(position);
         holder.mDate.setText(tmp.getYear());
         holder.mTitle.setText(tmp.getTitle());
         holder.mCasts.setText(tmp.getCasts().get(0).getName());
@@ -100,15 +98,15 @@ public class USboxRecyclerViewAdapter extends RecyclerView.Adapter<USboxRecycler
     }
 
     public String getItemImgUri(int position) {
-        return subjects.get(position).getSubject().getImages().getLarge();
+        return subjects.get(position).getImages().getLarge();
     }
 
     public SubjectBean getItem(int position) {
-        return subjects.get(position).getSubject();
+        return subjects.get(position);
     }
 
     public String getItemTitle(int position) {
-        return subjects.get(position).getSubject().getTitle();
+        return subjects.get(position).getTitle();
     }
 
     @Override

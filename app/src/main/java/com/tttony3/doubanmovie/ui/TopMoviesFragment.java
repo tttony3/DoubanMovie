@@ -20,7 +20,7 @@ import android.widget.ImageView;
 
 import com.tttony3.doubanmovie.R;
 import com.tttony3.doubanmovie.adapter.OnItemClickListener;
-import com.tttony3.doubanmovie.adapter.TopRecyclerViewAdapter;
+import com.tttony3.doubanmovie.adapter.MainRecyclerViewAdapter;
 import com.tttony3.doubanmovie.bean.SubjectBean;
 import com.tttony3.doubanmovie.interfaces.GetMoreMoviesListener;
 import com.tttony3.doubanmovie.interfaces.SubscriberOnNextListener;
@@ -50,7 +50,7 @@ public class TopMoviesFragment extends LazyFragment {
     private String mParam2;
     private View view;
     private RecyclerView mRecyclerView;
-    private TopRecyclerViewAdapter mTopRecyclerViewAdapter;
+    private MainRecyclerViewAdapter mTopRecyclerViewAdapter;
     private OnFragmentInteractionListener mListener;
     ProgressSubscriber<List<SubjectBean>> progressSubscriber;
     NormalSubscriber<List<SubjectBean>> normalSubscriber;
@@ -151,7 +151,7 @@ public class TopMoviesFragment extends LazyFragment {
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
             linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             mRecyclerView.setLayoutManager(linearLayoutManager);
-            mTopRecyclerViewAdapter = new TopRecyclerViewAdapter(this.getContext(), null);
+            mTopRecyclerViewAdapter = new MainRecyclerViewAdapter(this.getContext(), null);
             mRecyclerView.setAdapter(mTopRecyclerViewAdapter);
             mTopRecyclerViewAdapter.setGetMoreMoviesListener(new GetMoreMoviesListener() {
                 @Override

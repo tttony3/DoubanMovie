@@ -20,6 +20,11 @@ public class MainFragmentAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
+    }
+
+    @Override
     public Fragment getItem(int position) {
         return mFragments.get(position);
     }
@@ -33,4 +38,10 @@ public class MainFragmentAdapter extends FragmentStatePagerAdapter {
     public CharSequence getPageTitle(int position) {
         return mTitles.get(position);
     }
+
+    public void setFragmentsAndTitle(List<Fragment> fragments, List<String> titles) {
+        mFragments = fragments;
+        mTitles = titles;
+    }
+
 }
