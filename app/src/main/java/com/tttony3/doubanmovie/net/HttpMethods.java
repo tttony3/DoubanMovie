@@ -2,6 +2,7 @@ package com.tttony3.doubanmovie.net;
 
 import android.util.Log;
 
+import com.tttony3.doubanmovie.bean.BookIdBean;
 import com.tttony3.doubanmovie.bean.CastsBean;
 import com.tttony3.doubanmovie.bean.MoviesBean;
 import com.tttony3.doubanmovie.bean.SubjectBean;
@@ -25,13 +26,15 @@ import rx.schedulers.Schedulers;
  * Created by tttony3 on 2016/5/21.
  */
 public class HttpMethods {
+    public static final String BOOK ="book";
     private String TAG = "HttpMethods";
     public static final String BASE_URL = "https://api.douban.com/v2/movie/";
-
+    public static final String BOOKID_URL = "http://laddermaps.com/index.php/getbooks/";
     private static final int DEFAULT_TIMEOUT = 5;
 
     private Retrofit retrofit;
     private MovieService mMovieService;
+    private BookIdService mBookIdService;
 
     //构造方法私有
     private HttpMethods() {
@@ -49,14 +52,44 @@ public class HttpMethods {
         mMovieService = retrofit.create(MovieService.class);
     }
 
+    private HttpMethods(String type) {
+        //手动创建一个OkHttpClient并设置超时时间
+        OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
+        httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+    if(type.equals(BOOK)){
+        retrofit = new Retrofit.Builder()
+                .client(httpClientBuilder.build())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .baseUrl(BOOKID_URL)
+                .build();
+
+        mBookIdService = retrofit.create(BookIdService.class);
+    }
+    }
+
     //在访问HttpMethods时创建单例
     private static class SingletonHolder {
         private static final HttpMethods INSTANCE = new HttpMethods();
+        private static final HttpMethods BOOKID_INSTANCE = new HttpMethods(BOOK);
     }
 
     //获取单例
     public static HttpMethods getInstance() {
         return SingletonHolder.INSTANCE;
+    }
+    public static HttpMethods getInstance(String type) {
+        if(type.equals(BOOK))
+            return SingletonHolder.BOOKID_INSTANCE;
+        else
+            return SingletonHolder.INSTANCE;
+    }
+
+    /**
+     * 用于获取老司机给的ID
+     */
+    public void getTopBook(Subscriber<List<BookIdBean>> subscruber, String start, String num){
+
     }
 
     /**

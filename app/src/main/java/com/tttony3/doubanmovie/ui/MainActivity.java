@@ -23,7 +23,8 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, USboxMoviesFragment.OnFragmentInteractionListener, TopMoviesFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, USboxMoviesFragment.OnFragmentInteractionListener, TopMoviesFragment.OnFragmentInteractionListener,
+        TopBooksFragment.OnFragmentInteractionListener,ChartBooksFragment.OnFragmentInteractionListener {
     private String TAG = "MainActivity";
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
@@ -128,10 +129,10 @@ public class MainActivity extends AppCompatActivity
                 currentType = BOOK;
                 fragmentList.clear();
                 fragmentTitles.clear();
-                fragmentList.add(TopMoviesFragment.newInstance("", ""));
-                fragmentList.add(USboxMoviesFragment.newInstance("", ""));
+                fragmentList.add(ChartBooksFragment.newInstance("", ""));
+                fragmentList.add(TopBooksFragment.newInstance("", ""));
+                fragmentTitles.add("Chart");
                 fragmentTitles.add("Top");
-                fragmentTitles.add("Recent");
                 adapter.setFragmentsAndTitle(fragmentList, fragmentTitles);
                 adapter.notifyDataSetChanged();
                 mTabLayout.setupWithViewPager(mViewPager);
