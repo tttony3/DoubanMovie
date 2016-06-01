@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity
         mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);
 
+
     }
 
     @Override
@@ -108,7 +109,6 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
         if (id == R.id.nav_movie) {
             if (currentType != MOVIE) {
                 Log.v(TAG, "R.id.nav_movie");

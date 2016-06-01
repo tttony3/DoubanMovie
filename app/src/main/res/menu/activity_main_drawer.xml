@@ -4,7 +4,8 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_movie"
-            android:title="电影" />
+            android:title="电影"
+            android:checked="true"/>
         <!--android:icon="@drawable/ic_menu_camera"-->
         <item
             android:id="@+id/nav_book"

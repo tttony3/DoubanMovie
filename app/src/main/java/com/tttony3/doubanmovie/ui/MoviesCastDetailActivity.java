@@ -24,7 +24,7 @@ import com.tttony3.doubanmovie.net.HttpMethods;
 import com.tttony3.doubanmovie.net.NormalSubscriber;
 import com.tttony3.doubanmovie.utils.GlideCircleTransform;
 
-public class CastDetailActivity extends AppCompatActivity {
+public class MoviesCastDetailActivity extends AppCompatActivity {
     ImageView img ;
     String id ;
     String imgurl;
@@ -61,20 +61,20 @@ public class CastDetailActivity extends AppCompatActivity {
                 tvUrl.setText(o.getMobile_url());
                 tvBornPlace.setText(o.getBorn_place());
                 for (final WorksBean tmp : o.getWorks()) {
-                    View view = LayoutInflater.from(CastDetailActivity.this).inflate(R.layout.gallery_item_castworks, galleryWorks, false);
+                    View view = LayoutInflater.from(MoviesCastDetailActivity.this).inflate(R.layout.gallery_item_castworks, galleryWorks, false);
                     final ImageView img = (ImageView) view.findViewById(R.id.gallery_item_image);
                     TextView txt = (TextView) view.findViewById(R.id.gallery_item_text);
                     txt.setText(tmp.getSubject().getTitle());
-                    Glide.with(CastDetailActivity.this).load(tmp.getSubject().getImages().getLarge()).into(img);
+                    Glide.with(MoviesCastDetailActivity.this).load(tmp.getSubject().getImages().getLarge()).into(img);
                     view.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intent = new Intent(CastDetailActivity.this, DetailActivity.class);
+                            Intent intent = new Intent(MoviesCastDetailActivity.this, MoviesDetailActivity.class);
                             intent.putExtra(KEY_ID, v.getTransitionName());
                             intent.putExtra("bean", tmp.getSubject());
                             intent.putExtra("bitmap", drawableToBitmap(img.getDrawable()));
                             ActivityOptions activityOptions
-                                    = ActivityOptions.makeSceneTransitionAnimation(CastDetailActivity.this, v.findViewById(R.id.gallery_item_image), "img");
+                                    = ActivityOptions.makeSceneTransitionAnimation(MoviesCastDetailActivity.this, v.findViewById(R.id.gallery_item_image), "img");
 
                             startActivity(intent, activityOptions.toBundle());
                         }

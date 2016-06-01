@@ -5,6 +5,7 @@ import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.tttony3.doubanmovie.bean.BookInfoBean;
 import com.tttony3.doubanmovie.interfaces.ProgressCancelListener;
 import com.tttony3.doubanmovie.interfaces.SubscriberOnNextListener;
 import com.tttony3.doubanmovie.ui.ProgressDialogHandler;
@@ -24,6 +25,8 @@ public class NormalSubscriber<T> extends Subscriber<T> {
         this.mSubscriberOnNextListener = mSubscriberOnNextListener;
         this.context = context;
     }
+
+
 
 
     @Override

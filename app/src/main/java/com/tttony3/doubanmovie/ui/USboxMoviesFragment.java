@@ -136,7 +136,7 @@ public class USboxMoviesFragment extends LazyFragment {
             mUSboxRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onClick(View v, int position) {
-                    Intent intent = new Intent(getActivity(), DetailActivity.class);
+                    Intent intent = new Intent(getActivity(), MoviesDetailActivity.class);
                     intent.putExtra(KEY_ID, v.getTransitionName());
                     intent.putExtra("bean", mUSboxRecyclerViewAdapter.getItem(position));
                     intent.putExtra("type", "us");
