@@ -20,7 +20,7 @@ import android.widget.ImageView;
 
 import com.tttony3.doubanmovie.R;
 import com.tttony3.doubanmovie.adapter.OnItemClickListener;
-import com.tttony3.doubanmovie.adapter.MainRecyclerViewAdapter;
+import com.tttony3.doubanmovie.adapter.MoviesRecyclerViewAdapter;
 import com.tttony3.doubanmovie.bean.SubjectBean;
 import com.tttony3.doubanmovie.interfaces.GetMoreMoviesListener;
 import com.tttony3.doubanmovie.interfaces.SubscriberOnNextListener;
@@ -50,7 +50,7 @@ public class TopMoviesFragment extends LazyFragment {
     private String mParam2;
     private View view;
     private RecyclerView mRecyclerView;
-    private MainRecyclerViewAdapter mTopRecyclerViewAdapter;
+    private MoviesRecyclerViewAdapter mTopRecyclerViewAdapter;
     private OnFragmentInteractionListener mListener;
     ProgressSubscriber<List<SubjectBean>> progressSubscriber;
     NormalSubscriber<List<SubjectBean>> normalSubscriber;
@@ -151,7 +151,7 @@ public class TopMoviesFragment extends LazyFragment {
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
             linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             mRecyclerView.setLayoutManager(linearLayoutManager);
-            mTopRecyclerViewAdapter = new MainRecyclerViewAdapter(this.getContext(), null);
+            mTopRecyclerViewAdapter = new MoviesRecyclerViewAdapter(this.getContext(), null);
             mRecyclerView.setAdapter(mTopRecyclerViewAdapter);
             mTopRecyclerViewAdapter.setGetMoreMoviesListener(new GetMoreMoviesListener() {
                 @Override
@@ -162,7 +162,7 @@ public class TopMoviesFragment extends LazyFragment {
             mTopRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onClick(View v, int position) {
-                    Intent intent = new Intent(getActivity(), DetailActivity.class);
+                    Intent intent = new Intent(getActivity(), MoviesDetailActivity.class);
                     intent.putExtra(KEY_ID, v.getTransitionName());
                     intent.putExtra("bean", mTopRecyclerViewAdapter.getItem(position));
                     intent.putExtra("bitmap", drawableToBitmap(((ImageView) v.findViewById(R.id.img_movie)).getDrawable()));

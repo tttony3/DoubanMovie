@@ -19,7 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.tttony3.doubanmovie.R;
-import com.tttony3.doubanmovie.adapter.MainRecyclerViewAdapter;
+import com.tttony3.doubanmovie.adapter.MoviesRecyclerViewAdapter;
 import com.tttony3.doubanmovie.adapter.OnItemClickListener;
 import com.tttony3.doubanmovie.bean.SubjectBean;
 import com.tttony3.doubanmovie.interfaces.SubscriberOnNextListener;
@@ -40,7 +40,7 @@ public class USboxMoviesFragment extends LazyFragment {
     // TODO: Rename parameter arguments, choose names that match
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    MainRecyclerViewAdapter mUSboxRecyclerViewAdapter;
+    MoviesRecyclerViewAdapter mUSboxRecyclerViewAdapter;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -130,13 +130,13 @@ public class USboxMoviesFragment extends LazyFragment {
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
             linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             mRecyclerView.setLayoutManager(linearLayoutManager);
-            mUSboxRecyclerViewAdapter = new MainRecyclerViewAdapter(this.getContext(), null);
+            mUSboxRecyclerViewAdapter = new MoviesRecyclerViewAdapter(this.getContext(), null);
             mRecyclerView.setAdapter(mUSboxRecyclerViewAdapter);
 
             mUSboxRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onClick(View v, int position) {
-                    Intent intent = new Intent(getActivity(), DetailActivity.class);
+                    Intent intent = new Intent(getActivity(), MoviesDetailActivity.class);
                     intent.putExtra(KEY_ID, v.getTransitionName());
                     intent.putExtra("bean", mUSboxRecyclerViewAdapter.getItem(position));
                     intent.putExtra("type", "us");

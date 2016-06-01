@@ -7,4 +7,4 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ui.MainActivity"
-    tools:showIn="@layout/app_bar_main"></android.support.v4.view.ViewPager>
+    tools:showIn="@layout/app_bar_main"/>

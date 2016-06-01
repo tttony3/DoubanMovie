@@ -15,8 +15,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.tttony3.doubanmovie.R;
-import com.tttony3.doubanmovie.bean.CastsBean;
-import com.tttony3.doubanmovie.bean.DirectorsBean;
 import com.tttony3.doubanmovie.bean.PersonBean;
 import com.tttony3.doubanmovie.bean.SubjectBean;
 import com.tttony3.doubanmovie.interfaces.SubscriberOnNextListener;
@@ -29,8 +27,8 @@ import java.util.List;
 /**
  * Created by tttony3 on 2016/5/21.
  */
-public class DetailActivity extends AppCompatActivity {
-    String TAG = "DetailActivity";
+public class MoviesDetailActivity extends AppCompatActivity {
+    String TAG = "MoviesDetailActivity";
     ImageView backdrop;
     SubjectBean bean;
 
@@ -89,7 +87,7 @@ public class DetailActivity extends AppCompatActivity {
             public void onNext(String str) {
                 tvsummary.setText("\t\t" + str);
             }
-        }, DetailActivity.this), bean.getId());
+        }, MoviesDetailActivity.this), bean.getId());
     }
 
     private <T extends PersonBean> void fullGallery(List<T> directors, LinearLayout mGalleryDirectors) {
@@ -124,13 +122,13 @@ public class DetailActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(DetailActivity.this, CastDetailActivity.class);
+            Intent intent = new Intent(MoviesDetailActivity.this, MoviesCastDetailActivity.class);
             intent.putExtra(KEY_ID, v.getTransitionName());
             intent.putExtra("id", id);
             intent.putExtra("imgurl", imgurl);
             intent.putExtra("name", name);
             ActivityOptions activityOptions
-                    = ActivityOptions.makeSceneTransitionAnimation(DetailActivity.this, v.findViewById(R.id.gallery_item_image), "castImg");
+                    = ActivityOptions.makeSceneTransitionAnimation(MoviesDetailActivity.this, v.findViewById(R.id.gallery_item_image), "castImg");
 
             startActivity(intent, activityOptions.toBundle());
         }

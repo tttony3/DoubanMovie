@@ -19,8 +19,8 @@ import com.tttony3.doubanmovie.interfaces.GetMoreMoviesListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerViewAdapter.ViewHolder> {
-    private String TAG = "MainRecyclerViewAdapter";
+public class MoviesRecyclerViewAdapter extends RecyclerView.Adapter<MoviesRecyclerViewAdapter.ViewHolder> {
+    private String TAG = "MoviesRecyclerViewAdapter";
     private Context mContext;
     public boolean isFirst = true;
     private GetMoreMoviesListener getMoreMoviesListener;
@@ -31,7 +31,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
         this.onItemClickListener = onItemClickListener;
     }
 
-    public MainRecyclerViewAdapter(Context mContext, List<SubjectBean> subjects) {
+    public MoviesRecyclerViewAdapter(Context mContext, List<SubjectBean> subjects) {
         this.mContext = mContext;
         if (null != subjects)
             this.subjects = subjects;
@@ -56,7 +56,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     }
 
     @Override
-    public MainRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MoviesRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view =
                 LayoutInflater.from(parent.getContext()).inflate(R.layout.carditem_movie, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
@@ -72,7 +72,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
-    public void onBindViewHolder(final MainRecyclerViewAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final MoviesRecyclerViewAdapter.ViewHolder holder, final int position) {
         SubjectBean tmp = subjects.get(position);
         holder.mDate.setText(tmp.getYear());
         holder.mTitle.setText(tmp.getTitle());
