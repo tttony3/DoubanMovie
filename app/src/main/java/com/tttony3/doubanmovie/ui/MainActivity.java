@@ -25,7 +25,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, USboxMoviesFragment.OnFragmentInteractionListener, TopMoviesFragment.OnFragmentInteractionListener,
         TopBooksFragment.OnFragmentInteractionListener,ChartBooksFragment.OnFragmentInteractionListener {
-    private String TAG = "MainActivity";
+    private String TAG = "AppMainActivity";
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
     private List<Fragment> fragmentList;
