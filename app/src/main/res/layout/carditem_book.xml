@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:stateListAnimator="@drawable/animate_translationz"
+
+    android:foreground="?android:attr/selectableItemBackground"
+    android:layout_width="match_parent"
+    android:layout_height="132dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp">
+
+        <ImageView
+            android:scaleType="centerCrop"
+            android:layout_centerVertical="true"
+            android:transitionName="img"
+            android:id="@+id/img_book"
+            android:layout_width="100dp"
+            android:layout_height="126dp" />
+
+
+        <TextView
+            android:maxLines="1"
+            android:id="@+id/tv_book_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:ellipsize="end"
+
+            android:layout_toEndOf="@+id/img_book"
+            android:text="嫌疑人X的献身"
+            android:textSize="16sp" />
+
+
+        <TextView
+            android:id="@+id/tv_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="7dp"
+            android:layout_below="@+id/tv_book_title"
+            android:layout_toEndOf="@+id/img_book"
+            android:text="作者:"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_book_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_author"
+            android:layout_toEndOf="@+id/tv_author"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="老司机"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_press"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="7dp"
+            android:layout_below="@+id/tv_author"
+            android:layout_toEndOf="@+id/img_book"
+            android:text="出版社:"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_book_press"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:layout_alignBottom="@+id/tv_press"
+            android:layout_toEndOf="@+id/tv_press"
+            android:text="老司机出版社"
+            android:ellipsize="end"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_pressdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="7dp"
+            android:layout_below="@+id/tv_press"
+            android:layout_toEndOf="@+id/img_book"
+            android:text="出版日期:"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_book_pressdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:layout_alignBottom="@+id/tv_pressdate"
+            android:layout_toEndOf="@+id/tv_pressdate"
+            android:text="2016年6月1日"
+            android:ellipsize="end"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_marginTop="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_toEndOf="@id/img_book"
+            android:paddingBottom="3dp"
+            android:text="价格:"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_book_price"
+            android:paddingBottom="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:text="20"
+            android:textSize="16sp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/tv_book_author" />
+
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
