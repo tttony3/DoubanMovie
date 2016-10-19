@@ -25,7 +25,7 @@ import java.util.List;
  * Created by Mr_tao on 2016/5/27.
  */
 public class BooksRecyclerViewAdapter extends RecyclerView.Adapter<BooksRecyclerViewAdapter.ViewHolder> {
-    private String TAG = "BooksRecyclerViewAdapter";
+    private String TAG = "BooksViewAdapter";
     private Context mContext;
     public boolean isFirst = true;
     public String mType = null;

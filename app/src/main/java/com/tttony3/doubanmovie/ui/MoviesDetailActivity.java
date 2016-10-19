@@ -82,10 +82,12 @@ public class MoviesDetailActivity extends AppCompatActivity {
             tvGenres.append(tmp + " ");
         }
 
-        HttpMethods.getInstance().getSubjuct(new NormalSubscriber<String>(new SubscriberOnNextListener<String>() {
+        HttpMethods.getInstance().getSubjuct(new NormalSubscriber<SubjectBean>(new SubscriberOnNextListener<SubjectBean>() {
             @Override
-            public void onNext(String str) {
-                tvsummary.setText("\t\t" + str);
+            public void onNext(SubjectBean bean) {
+                tvsummary.setText("\t\t" + bean.getSummary());
+                if (bm == null)
+                    Glide.with(MoviesDetailActivity.this).load(bean.getImages().getLarge()).into(backdrop);
             }
         }, MoviesDetailActivity.this), bean.getId());
     }

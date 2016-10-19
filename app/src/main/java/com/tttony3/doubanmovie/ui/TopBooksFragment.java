@@ -156,6 +156,9 @@ public class TopBooksFragment extends LazyFragment {
     }
 
     public Bitmap drawableToBitmap(Drawable drawable) {
+        if (drawable == null) {
+            return null;
+        }
         Bitmap bitmap = Bitmap
                 .createBitmap(
                         drawable.getIntrinsicWidth(),

@@ -164,6 +164,8 @@ public class USboxMoviesFragment extends LazyFragment {
     }
 
     public static Bitmap drawableToBitmap(Drawable drawable) {
+        if (drawable == null)
+            return null;
         Bitmap bitmap = Bitmap
                 .createBitmap(
                         drawable.getIntrinsicWidth(),

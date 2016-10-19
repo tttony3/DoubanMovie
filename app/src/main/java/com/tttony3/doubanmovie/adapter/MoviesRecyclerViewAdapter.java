@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MoviesRecyclerViewAdapter extends RecyclerView.Adapter<MoviesRecyclerViewAdapter.ViewHolder> {
-    private String TAG = "MoviesRecyclerViewAdapter";
+    private String TAG = "MoviesViewAdapter";
     private Context mContext;
     public boolean isFirst = true;
     private GetMoreMoviesListener getMoreMoviesListener;

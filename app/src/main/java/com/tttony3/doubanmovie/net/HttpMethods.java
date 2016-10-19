@@ -194,15 +194,9 @@ public class HttpMethods {
      * @param subscriber 由调用者传过来的观察者对象
      * @param id 影片id
      */
-    public void getSubjuct(Subscriber<String> subscriber, String id){
+    public void getSubjuct(Subscriber<SubjectBean> subscriber, String id) {
         Log.v(TAG,"getSubject "+id);
         mMovieService.getSubject(id)
-                .map(new Func1<SubjectBean, String>() {
-                    @Override
-                    public String call(SubjectBean bean) {
-                        return bean.getSummary();
-                    }
-                })
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
